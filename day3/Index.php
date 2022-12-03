@@ -24,7 +24,33 @@ class Index
 
         return $resultat;
     }
+
+    public function reponse2()
+    {
+        $input = file_get_contents('input.txt');
+        $input = explode("\n", $input);
+
+        $resultat = 0;
+        $newArray = [];
+        $i = 0;
+        $y = 0;
+        foreach ($input as $string) {
+            if ($y < 3) {
+                $newArray[$i][] = str_split($string);
+                $y++;
+            } else {
+                $appearsInBoth = array_unique(array_intersect($newArray[$i][0], $newArray[$i][1], $newArray[$i][2]));
+                $resultat += strpos(self::ALPHABET, reset($appearsInBoth)) + 1;
+                $i++;
+                $y = 0;
+            }
+        }
+        dd($sumPriorities);
+    }
 }
 
+
+
 $class = new Index();
-echo $class->reponse1();
+// echo $class->reponse1();
+$class->reponse2();
