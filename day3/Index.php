@@ -45,7 +45,8 @@ class Index
                 $y = 0;
             }
         }
-        dd($sumPriorities);
+
+        return $resultat;
     }
 }
 
@@ -53,4 +54,4 @@ class Index
 
 $class = new Index();
 // echo $class->reponse1();
-$class->reponse2();
+echo $class->reponse2();
