@@ -16,7 +16,7 @@ class Index
         foreach ($input as $string) {
             $newArray = [
                 str_split(substr($string, 0, strlen($string) / 2)),
-                str_split(substr($string, strlen($string) / 2, strlen($string)))
+                str_split(substr($string, strlen($string) / 2, strlen($string))),
             ];
             $appearsInBoth = array_unique(array_intersect($newArray[0], $newArray[1]));
             $resultat += strpos(self::ALPHABET, reset($appearsInBoth)) + 1;
@@ -25,33 +25,33 @@ class Index
         return $resultat;
     }
 
-    public function reponse2()
+    public function reponse2(): int
     {
         $input = file_get_contents('input.txt');
         $input = explode("\n", $input);
-
         $resultat = 0;
-        $newArray = [];
-        $i = 0;
-        $y = 0;
-        foreach ($input as $string) {
-            if ($y < 3) {
-                $newArray[$i][] = str_split($string);
-                $y++;
-            } else {
-                $appearsInBoth = array_unique(array_intersect($newArray[$i][0], $newArray[$i][1], $newArray[$i][2]));
-                $resultat += strpos(self::ALPHABET, reset($appearsInBoth)) + 1;
-                $i++;
-                $y = 0;
-            }
-        }
 
-        return $resultat;
+        do {
+            $group = array_splice($input, 0, 3);
+
+            foreach ($group as $key => $row) {
+                $group[$key] = str_split($row);
+            }
+
+            $appearsInBoth = array_unique(array_intersect(...$group));
+            $resultat += strpos(self::ALPHABET, reset($appearsInBoth)) + 1;
+        } while (!empty($input));
+
+       return $resultat;
     }
 }
 
-
-
 $class = new Index();
-// echo $class->reponse1();
+echo("Réponse 1 :");
+echo("\n");
+echo $class->reponse1();
+echo("\n");
+echo("Réponse 2 :");
+echo("\n");
 echo $class->reponse2();
+echo("\n");
